@@ -7,4 +7,4 @@ The file is in JSON format and can be imported into [Postman](https://www.postma
 
 # User Guide
 
-The userguide is [here](userguide.md)
+The userguide is [here](Userguide.md)
