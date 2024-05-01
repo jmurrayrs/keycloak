@@ -1,9 +1,6 @@
-# Keycloak OpenID Endpoint Configuration
+# Keycloak OpenID Connect Payloads Documentation
 
 The file is in JSON format and can be imported into [Postman](https://www.postman.com/) and [Insomnia](https://insomnia.rest/download).
-
-
-# Keycloak OpenID Connect Payloads Documentation
 
 This document describes the OpenID Connect routes for Keycloak, focusing on various grant types and other supported types of data. The following are the environment variables, routes, and payloads for each endpoint.
 
