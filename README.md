@@ -4,7 +4,7 @@ This repository was created with the intention of sharing the information from K
 
 
 ## Documents
-[Keycloak OpenID Endpoint Configuration](payloads/README.md)
+[Keycloak OpenID Connect Payloads Documentation](payloads/README.md)
 
 ## Projects
  
