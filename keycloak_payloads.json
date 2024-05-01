@@ -1,7 +1,7 @@
 {
     "info": {
         "_postman_id": "f9d09be0-2f3e-4b58-926c-d53d1bcaedfe",
-        "name": "Keycloak Routes with Environment Variables",
+        "name": "Keycloak Routes with payloads",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "variable": [
@@ -12,13 +12,25 @@
         },
         {
             "key": "realm",
-            "value": "myrelm",
+            "value": "myrealm",
             "type": "string"
         }
     ],
     "item": [
         {
-            "name": "Token",
+            "name": "Authorization",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/auth",
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "auth"]
+                }
+            }
+        },
+        {
+            "name": "Token - Authorization Code",
             "request": {
                 "method": "POST",
                 "header": [],
@@ -49,16 +61,119 @@
                 },
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/token",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "token"
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "token"]
+                }
+            }
+        },
+        {
+            "name": "Token - Refresh Token",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "grant_type",
+                            "value": "refresh_token",
+                            "type": "text"
+                        },
+                        {
+                            "key": "refresh_token",
+                            "value": "your_refresh_token",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "your_client_secret",
+                            "type": "text"
+                        }
                     ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/token",
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "token"]
+                }
+            }
+        },
+        {
+            "name": "Token - Client Credentials",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "grant_type",
+                            "value": "client_credentials",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "your_client_secret",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/token",
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "token"]
+                }
+            }
+        },
+        {
+            "name": "Token - Resource Owner Password",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "grant_type",
+                            "value": "password",
+                            "type": "text"
+                        },
+                        {
+                            "key": "username",
+                            "value": "your_username",
+                            "type": "text"
+                        },
+                        {
+                            "key": "password",
+                            "value": "your_password",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "your_client_secret",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/token",
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "token"]
                 }
             }
         },
@@ -89,17 +204,8 @@
                 },
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/token/introspect",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "token",
-                        "introspect"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "token", "introspect"]
                 }
             }
         },
@@ -116,16 +222,8 @@
                 ],
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/userinfo",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "userinfo"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "userinfo"]
                 }
             }
         },
@@ -156,16 +254,8 @@
                 },
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/logout",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "logout"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "logout"]
                 }
             }
         },
@@ -176,16 +266,8 @@
                 "header": [],
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/certs",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "certs"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "certs"]
                 }
             }
         },
@@ -221,16 +303,8 @@
                 },
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/revoke",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "revoke"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "revoke"]
                 }
             }
         },
@@ -251,17 +325,8 @@
                 },
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/auth/device",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "auth",
-                        "device"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "auth", "device"]
                 }
             }
         },
@@ -292,18 +357,8 @@
                 },
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/ext/ciba/auth",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "ext",
-                        "ciba",
-                        "auth"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "ext", "ciba", "auth"]
                 }
             }
         },
@@ -329,18 +384,8 @@
                 },
                 "url": {
                     "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/ext/par/request",
-                    "host": [
-                        "{{base_url}}"
-                    ],
-                    "path": [
-                        "realms",
-                        "{{realm}}",
-                        "protocol",
-                        "openid-connect",
-                        "ext",
-                        "par",
-                        "request"
-                    ]
+                    "host": ["{{base_url}}"],
+                    "path": ["realms", "{{realm}}", "protocol", "openid-connect", "ext", "par", "request"]
                 }
             }
         }
