@@ -1,4 +1,4 @@
-# Keycloack Facilities
+# Keycloak's Facilities
 
 This repository was created with the intention of sharing the information from Keycloak. If you would like to contribute, please open a discussion topic to improve this repository.
 
