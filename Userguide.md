@@ -1,85 +1,121 @@
-# Keycloak OpenID Connect Routes
+# Keycloak OpenID Connect Payloads Documentation
 
-This repository contains a collection of payloads for Keycloak OpenID Connect routes. Each route has a specific function within the Keycloak authentication and authorization process. Below are the details of each route:
+This document describes the OpenID Connect routes for Keycloak, focusing on various grant types and other supported types of data. The following are the environment variables, routes, and payloads for each endpoint.
 
-## Token
+## Environment Variables
+- **base_url**: The base URL for Keycloak, typically `http://localhost:8080` if you is running keycloak from docker container.
+- **realm**: The Keycloak realm.
+
+## Routes and Payloads
+
+### Authorization Endpoint
+- **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/auth`
+- **Method**: GET
+- **Description**: This route initiates the authorization process.
+
+### Token Endpoint - Authorization Code
 - **Method**: POST
-- **Description**: This route is used to obtain an access token using an authorization code.
 - **Payload**:
-  - `grant_type`: Authorization code.
-  - `code`: The authorization code.
-  - `client_id`: The ID of your client.
-  - `redirect_uri`: The redirect URI.
+  - `grant_type`: `authorization_code`
+  - `code`: Authorization code.
+  - `client_id`: Client ID.
+  - `redirect_uri`: Redirect URI.
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/token`
+- **Description**: This endpoint is used to obtain an access token using an authorization code.
 
-## Introspect
+### Token Endpoint - Refresh Token
 - **Method**: POST
-- **Description**: This route is used to introspect an access token.
 - **Payload**:
-  - `token`: The access token to introspect.
-  - `client_id`: The ID of your client.
-  - `client_secret`: The client secret.
+  - `grant_type`: `refresh_token`
+  - `refresh_token`: Refresh token.
+  - `client_id`: Client ID.
+  - `client_secret`: Client secret.
+- **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/token`
+- **Description**: This endpoint is used to refresh tokens.
+
+### Token Endpoint - Client Credentials
+- **Method**: POST
+- **Payload**:
+  - `grant_type`: `client_credentials`
+  - `client_id`: Client ID.
+  - `client_secret`: Client secret.
+- **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/token`
+- **Description**: This endpoint is used to get tokens via client credentials.
+
+### Token Endpoint - Resource Owner Password
+- **Method**: POST
+- **Payload**:
+  - `grant_type`: `password`
+  - `username`: Username.
+  - `password`: Password.
+  - `client_id`: Client ID.
+  - `client_secret`: Client secret.
+- **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/token`
+- **Description**: This endpoint allows you to get an access token by providing username and password.
+
+### Introspection Endpoint
+- **Method**: POST
+- **Payload**:
+  - `token`: The token to introspect.
+  - `client_id`: Client ID.
+  - `client_secret`: Client secret.
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/token/introspect`
+- **Description**: This endpoint introspects tokens to check their validity.
 
-## Userinfo
+### Userinfo Endpoint
 - **Method**: GET
-- **Description**: This route retrieves user information using an access token.
-- **Headers**: 
-  - `Authorization`: Bearer token.
+- **Headers**: `Authorization: Bearer <access_token>`
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/userinfo`
+- **Description**: This endpoint retrieves user information.
 
-## Logout
+### Logout Endpoint
 - **Method**: POST
-- **Description**: This route logs out a user by invalidating their refresh token.
 - **Payload**:
-  - `client_id`: The ID of your client.
-  - `client_secret`: The client secret.
-  - `refresh_token`: The refresh token.
+  - `client_id`: Client ID.
+  - `client_secret`: Client secret.
+  - `refresh_token`: Refresh token.
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/logout`
+- **Description**: This endpoint is used to log out a user by invalidating refresh tokens.
 
-## Certs
+### Certs Endpoint
 - **Method**: GET
-- **Description**: This route retrieves the public certificates for the realm.
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/certs`
+- **Description**: This endpoint retrieves the JSON Web Key Set (JWKS) for token signature verification.
 
-## Revoke
+### Revoke Endpoint
 - **Method**: POST
-- **Description**: This route revokes an access token.
 - **Payload**:
-  - `client_id`: The ID of your client.
-  - `client_secret`: The client secret.
+  - `client_id`: Client ID.
+  - `client_secret`: Client secret.
   - `token`: The token to revoke.
-  - `token_type_hint`: The type of token to revoke (e.g., access token).
+  - `token_type_hint`: `access_token`
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/revoke`
+- **Description**: This endpoint is used to revoke tokens.
 
-## Device Auth
+### Device Authorization Endpoint
 - **Method**: POST
-- **Description**: This route is used for device authorization.
 - **Payload**:
-  - `client_id`: The ID of your client.
+  - `client_id`: Client ID.
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/auth/device`
+- **Description**: This endpoint is used for device-based authorization.
 
-## CIBA Auth
+### CIBA Authentication Endpoint
 - **Method**: POST
-- **Description**: This route is used for Client Initiated Backchannel Authentication (CIBA).
 - **Payload**:
-  - `client_id`: The ID of your client.
-  - `scope`: The scope (e.g., openid).
-  - `binding_message`: A message used for binding.
+  - `client_id`: Client ID.
+  - `scope`: Scope.
+  - `binding_message`: Binding message.
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/ext/ciba/auth`
+- **Description**: This endpoint is used for Client Initiated Backchannel Authentication (CIBA).
 
-## PAR
+### Pushed Authorization Request Endpoint (PAR)
 - **Method**: POST
-- **Description**: This route is used for Pushed Authorization Requests (PAR).
 - **Payload**:
-  - `client_id`: The ID of your client.
-  - `request_uri`: The URI for the request.
+  - `client_id`: Client ID.
+  - `request_uri`: Request URI.
 - **URL**: `{{base_url}}/realms/{{realm}}/protocol/openid-connect/ext/par/request`
+- **Description**: This endpoint is used for pushed authorization requests.
 
-## Contributions
+## Contributions and Further Information
 
-If you would like to contribute more information or improve the documentation, please open a discussion topic or submit a pull request.
-
-## Importing the Files
-
-The JSON files in this repository can be imported into Postman and Insomnia for testing and development.
+If you'd like to contribute more information or have questions, feel free to open a discussion or submit a pull request.
