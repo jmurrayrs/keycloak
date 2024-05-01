@@ -1,0 +1,348 @@
+{
+    "info": {
+        "_postman_id": "f9d09be0-2f3e-4b58-926c-d53d1bcaedfe",
+        "name": "Keycloak Routes with Environment Variables",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8080",
+            "type": "string"
+        },
+        {
+            "key": "realm",
+            "value": "myrelm",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Token",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "grant_type",
+                            "value": "authorization_code",
+                            "type": "text"
+                        },
+                        {
+                            "key": "code",
+                            "value": "auth_code_here",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "redirect_uri",
+                            "value": "your_redirect_uri",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/token",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "token"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Introspect",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "token",
+                            "value": "access_token_here",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "your_client_secret",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/token/introspect",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "token",
+                        "introspect"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Userinfo",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer access_token_here",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/userinfo",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "userinfo"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Logout",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "your_client_secret",
+                            "type": "text"
+                        },
+                        {
+                            "key": "refresh_token",
+                            "value": "refresh_token_here",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/logout",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "logout"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Certs",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/certs",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "certs"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Revoke",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "your_client_secret",
+                            "type": "text"
+                        },
+                        {
+                            "key": "token",
+                            "value": "token_to_revoke",
+                            "type": "text"
+                        },
+                        {
+                            "key": "token_type_hint",
+                            "value": "access_token",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/revoke",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "revoke"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Device Auth",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/auth/device",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "auth",
+                        "device"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "CIBA Auth",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "scope",
+                            "value": "openid",
+                            "type": "text"
+                        },
+                        {
+                            "key": "binding_message",
+                            "value": "binding_message_here",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/ext/ciba/auth",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "ext",
+                        "ciba",
+                        "auth"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PAR",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "client_id",
+                            "value": "your_client_id",
+                            "type": "text"
+                        },
+                        {
+                            "key": "request_uri",
+                            "value": "your_request_uri",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{base_url}}/realms/{{realm}}/protocol/openid-connect/ext/par/request",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "realms",
+                        "{{realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "ext",
+                        "par",
+                        "request"
+                    ]
+                }
+            }
+        }
+    ]
+}
